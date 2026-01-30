@@ -81,6 +81,78 @@
  - Retention curves over time
  - Weekly activity trends
  - Filters for platform and acquisition source
+
+---
+
+## Setup
+
+1. Create and activate a virtual environment (optional).
+2. Install dependencies:
+   - `pip3 install -r requirements.txt`
+3. Generate local data (optional):
+   - `python3 src/data_generation.py`
+
+## Run
+
+## Startup
+
+1. Ensure `product_events.csv` exists (or set `MOCKAROO_API_URL` in `.env`).
+2. Start the app:
+  - `python3 -m streamlit run app.py`
+3. Open the local URL shown in the terminal (typically `http://localhost:8501`).
+
+## Node Backend (Render)
+
+This repository also includes a small Node/Express API for hosting on Render.
+
+1. Install dependencies:
+   - `npm install`
+2. Start the server:
+   - `npm start`
+
+The API reads `product_events.csv` by default (or `data/events.csv`), and supports:
+
+- `GET /metrics/summary`
+- `GET /metrics/funnel`
+- `GET /metrics/retention`
+- `GET /metrics/dau`
+- `GET /events`
+
+To override the CSV path, set `EVENTS_CSV_PATH`.
+
+## Streamlit on Render (Embed in Webflow)
+
+This repo can be deployed directly to Render as a Streamlit web service.
+
+1. Create a new Render Web Service from this repo.
+2. Render will pick up `render.yaml` automatically.
+3. Once deployed, use the Render URL in a Webflow Embed element via an iframe.
+
+Example iframe:
+
+```html
+<iframe
+  src="https://your-render-service.onrender.com"
+  width="100%"
+  height="800"
+  style="border:0;"
+></iframe>
+```
+
+## Mockaroo API (Optional)
+
+To load live synthetic data from Mockaroo:
+
+1. Put your API URL in `.env`:
+   - `MOCKAROO_API_URL="https://api.mockaroo.com/api/<schema>?count=1000&key=<key>"`
+2. The app will use the API when available and fall back to local CSV files.
+
+## Screenshots
+
+Add screenshots here once the dashboard is running:
+
+- `docs/screenshots/overview.png`
+- `docs/screenshots/funnel.png`
  
  ---
  
